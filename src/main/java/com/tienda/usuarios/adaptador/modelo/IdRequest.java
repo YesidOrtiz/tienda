@@ -1,4 +1,4 @@
-package com.tienda.administracion.adaptador.modelo;
+package com.tienda.usuarios.adaptador.modelo;
 
 public class IdRequest {
     private int id;

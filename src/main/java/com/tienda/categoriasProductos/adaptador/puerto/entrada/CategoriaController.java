@@ -66,7 +66,7 @@ public class CategoriaController {
             @ApiResponse(responseCode = "201",description = "Se creo la categoria"),
             @ApiResponse(responseCode = "400",description = "No se pudo crear la categoria debido a algun error",content = {@Content(mediaType = "application/json",schema = @Schema(implementation = ModelResponseForREST.class))})
     })
-    public ResponseEntity<Categoria> crearCategoria(@RequestBody CategoriaControllerModel categoria) throws InvalidInputException, ItemAlreadyExistException {
+    public ResponseEntity<?> crearCategoria(@RequestBody CategoriaControllerModel categoria) throws InvalidInputException, ItemAlreadyExistException {
         if (service.crearCategoria(mapper.toDomainModel(categoria))){
             return new ResponseEntity<>(HttpStatus.CREATED);
         }else {

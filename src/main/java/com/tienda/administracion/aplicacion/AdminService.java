@@ -64,6 +64,9 @@ public class AdminService implements PuertoEntradaAdmin {
 
     @Override
     public Administrador actualizarAdmin(Administrador admin) throws SearchItemNotFoundException, InvalidInputException {
+        if(!repository.existById(admin.getId())){
+            throw new SearchItemNotFoundException("No existe el administrador");
+        }
         if (admin.getNombres().isEmpty() || !admin.getNombres().matches(regexNombre)){
             throw new InvalidInputException("Solo se permiten letras en el campo nombre");
         }

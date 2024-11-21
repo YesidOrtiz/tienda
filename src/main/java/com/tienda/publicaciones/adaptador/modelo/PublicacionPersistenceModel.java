@@ -16,22 +16,28 @@ public class PublicacionPersistenceModel {
     private String tituloPublicacion;
     private String descripcion;
     private double precio;
-    @Column(name = "categoria_id",nullable = false)
-    private int categoriaId;
+    /*@Column(name = "categoria_id",nullable = false)
+    private int categoriaId;*/
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "categoria_id",referencedColumnName = "id_categoria")
+    private CategoriaPersistenceModel categoriaId;
     private int cantidadDisponible;
     private LocalDateTime fechaPublicacion;
-    @Column(name = "id_usuario",nullable = false)
-    private int idUsuario;
+    /*@Column(name = "id_usuario",nullable = false)
+    private int idUsuario;*/
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_usuario",referencedColumnName = "id_usuario")
+    private UsuarioPersistenceModel usuario;
     @Column(name = "visible",nullable = false)
     private boolean visible;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    /*@ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "categoria_id",referencedColumnName = "id_categoria",insertable = false,updatable = false)
-    private CategoriaPersistenceModel categoria;
+    private CategoriaPersistenceModel categoria;*/
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    /*@ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_usuario",referencedColumnName = "id_usuario",insertable = false,updatable = false)
-    private UsuarioPersistenceModel usuario;
+    private UsuarioPersistenceModel usuario;*/
 
 
     public PublicacionPersistenceModel() {
@@ -69,13 +75,13 @@ public class PublicacionPersistenceModel {
         this.precio = precio;
     }
 
-    public int getCategoriaId() {
+    /*public int getCategoriaId() {
         return categoriaId;
     }
 
     public void setCategoriaId(int categoriaId) {
         this.categoriaId = categoriaId;
-    }
+    }*/
 
     public int getCantidadDisponible() {
         return cantidadDisponible;
@@ -93,21 +99,29 @@ public class PublicacionPersistenceModel {
         this.fechaPublicacion = fechaPublicacion;
     }
 
-    public int getIdUsuario() {
+    /*public int getIdUsuario() {
         return idUsuario;
     }
 
     public void setIdUsuario(int idUsuario) {
         this.idUsuario = idUsuario;
+    }*/
+    /*-------------------------------------------------------*/
+    public CategoriaPersistenceModel getCategoriaId() {
+        return categoriaId;
     }
 
-    public CategoriaPersistenceModel getCategoria() {
+    public void setCategoriaId(CategoriaPersistenceModel categoriaId) {
+        this.categoriaId = categoriaId;
+    }
+
+    /*public CategoriaPersistenceModel getCategoria() {
         return categoria;
     }
 
     public void setCategoria(CategoriaPersistenceModel categoria) {
         this.categoria = categoria;
-    }
+    }*/
 
     public UsuarioPersistenceModel getUsuario() {
         return usuario;

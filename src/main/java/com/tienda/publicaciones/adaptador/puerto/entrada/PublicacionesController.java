@@ -65,8 +65,8 @@ public class PublicacionesController {
             @ApiResponse(responseCode = "404",description = "La categoria que se le esta tratando de asignar a la publicacion no existe"),
             @ApiResponse(responseCode = "400",description = "No se pudo publicar debido a algun error en la peticion recibida")
     })
-    public ResponseEntity<Publicacion> crearPublicacion(@RequestBody PublicacionControllerModel publicacion) throws InvalidInputException,SearchItemNotFoundException, ItemAlreadyExistException {
-        Publicacion response=service.crearPublicacion(mapper.toDomainModel(publicacion));
+    public ResponseEntity<Publicacion> crearPublicacion(@RequestBody Publicacion publicacion) throws InvalidInputException,SearchItemNotFoundException, ItemAlreadyExistException {
+        Publicacion response=service.crearPublicacion(publicacion);
         if (response !=null){
             return new ResponseEntity<>(response,HttpStatus.CREATED);
         }

@@ -42,7 +42,7 @@ class PublicacionesRepositoryTest {
         publicacionPersistenceModel.setTituloPublicacion("Tomate cherry");
         publicacionPersistenceModel.setDescripcion("Tomate cherry de alta calidad");
         publicacionPersistenceModel.setPrecio(10.5);
-        publicacionPersistenceModel.setCategoria(categoria);
+        publicacionPersistenceModel.setCategoriaId(categoria);
         publicacionPersistenceModel.setCantidadDisponible(5);
         publicacionPersistenceModel.setFechaPublicacion(LocalDateTime.now());
         //publicaciones.add(publicacionPersistenceModel);
