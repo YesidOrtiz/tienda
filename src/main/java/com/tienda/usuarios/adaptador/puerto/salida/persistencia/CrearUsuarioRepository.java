@@ -5,12 +5,14 @@ import com.tienda.usuarios.adaptador.modelo.UsuarioPersistenceModel;
 import com.tienda.usuarios.aplicacion.puerto.salida.PuertoCrearUsuario;
 import com.tienda.usuarios.dominio.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public class CrearUsuarioRepository implements PuertoCrearUsuario {
     private UsuarioCrudRepository repository;
     private MapperRepositoryToDomainUsuario mapper;
+    private PasswordEncoder passwordEncoder;
     //private String regexContrasena = "^(?=.*[a-zA-Z])[a-zA-Z0-9#, ]+$";
 
     @Autowired
@@ -23,11 +25,18 @@ public class CrearUsuarioRepository implements PuertoCrearUsuario {
         this.repository = repository;
     }
 
+    @Autowired
+    public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
+    }
+
     @Override
     public Usuario crearUsuario(Usuario usuario) throws InvalidInputException {
         if (usuario.getContrasena().length()<8){
             throw new InvalidInputException("La contraseña debe tener almenos 8 caracteres");
         }
+        String passwordEncode= this.passwordEncoder.encode(usuario.getContrasena());
+        usuario.setContrasena(passwordEncode);
         /*if (!usuario.getContrasena().matches(regexContrasena)) {
             throw new InvalidInputException("el campo contraseña no cumple con los requisitos");
         }*/

@@ -6,6 +6,7 @@ import com.tienda.administracion.dominio.Administrador;
 import com.tienda.exceptionHandler.excepciones.ItemAlreadyExistException;
 import com.tienda.exceptionHandler.excepciones.SearchItemNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ import java.util.ArrayList;
 public class AdminRepository implements PuertoSalidaAdmin {
     private AdminCrudRepository repository;
     private MapperRepositoryToDomainAdmin mapper;
+    private PasswordEncoder passwordEncoder;
 
     /*-------------------------------------------------------------*/
     @Autowired
@@ -24,6 +26,11 @@ public class AdminRepository implements PuertoSalidaAdmin {
     @Autowired
     public void setMapper(MapperRepositoryToDomainAdmin mapper) {
         this.mapper = mapper;
+    }
+
+    @Autowired
+    public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
     }
     /*-------------------------------------------------------------*/
 
@@ -53,6 +60,8 @@ public class AdminRepository implements PuertoSalidaAdmin {
         if (repository.existsById(admin.getId())){
             throw new ItemAlreadyExistException("Ya existe un administrador con este id");
         }
+        String passwordEncoded=this.passwordEncoder.encode(admin.getContrasena());
+        admin.setContrasena(passwordEncoded);
         AdministradorPersistenceModel response=repository.save(
                 mapper.toPersistenceModel(admin)
         );
@@ -65,6 +74,8 @@ public class AdminRepository implements PuertoSalidaAdmin {
             AdministradorPersistenceModel response=repository.save(mapper.toPersistenceModel(admin));
             return mapper.toDomainModel(response);
         }
+        String passwordEncoded=this.passwordEncoder.encode(admin.getContrasena());
+        admin.setContrasena(passwordEncoded);
         throw new SearchItemNotFoundException("El administrador a actualizar no existe");
     }
 
