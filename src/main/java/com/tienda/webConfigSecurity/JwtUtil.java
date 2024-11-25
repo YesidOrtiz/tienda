@@ -2,6 +2,7 @@ package com.tienda.webConfigSecurity;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.JWTVerificationException;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -19,5 +20,21 @@ public class JwtUtil {
                 .withIssuedAt(new Date())//cuando se firmo el token
                 .withExpiresAt(new Date(System.currentTimeMillis()+ TimeUnit.DAYS.toMillis(15)))//fecha en la que se vence
                 .sign(ALGORITHM);//firmado con este algoritmo
+    }
+    public boolean isValid(String jwt){
+        try {
+            JWT.require(ALGORITHM)
+                    .build()
+                    .verify(jwt);
+            return true;
+        }catch (JWTVerificationException e){
+            return false;
+        }
+    }
+    public String getUserName(String jwt){
+        return JWT.require(ALGORITHM)
+                .build()
+                .verify(jwt)
+                .getSubject();
     }
 }

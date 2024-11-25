@@ -15,12 +15,10 @@ public interface CategoriaPortIn {
     @Secured("ROLE_ADMIN")
     Categoria actualizarCategoria(Categoria categoria) throws SearchItemNotFoundException, InvalidInputException;
 
-    @Secured("ROLE_ADMIN")
     Categoria obtenerCategoria(int id) throws SearchItemNotFoundException;
 
     @Secured("ROLE_ADMIN")
     boolean eliminarCategoria(int id) throws SearchItemNotFoundException;
 
-    @Secured("ROLE_ADMIN")
     ArrayList<Categoria> consultarCategorias();
 }
