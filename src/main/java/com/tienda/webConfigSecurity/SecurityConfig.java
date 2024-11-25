@@ -40,17 +40,25 @@ public class SecurityConfig {
                     * las rutas del arbol a partir del sufijo. Las autorizaciones deben ir de lo general a lo especifico*/
                     customizeRequest.requestMatchers("/api/auth/**").permitAll();
 
+                    customizeRequest.requestMatchers(HttpMethod.DELETE,"/productos/*").hasRole("ADMIN");
                     customizeRequest.requestMatchers(HttpMethod.GET,"/productos/*").hasAnyRole("ADMIN","USUARIO");
                     customizeRequest.requestMatchers(HttpMethod.POST,"/productos/*").hasAnyRole("USUARIO");
                     customizeRequest.requestMatchers(HttpMethod.PUT,"/productos/*").hasAnyRole("USUARIO");
-                    customizeRequest.requestMatchers(HttpMethod.DELETE,"/productos/*").hasRole("ADMIN");
 
                     customizeRequest.requestMatchers(HttpMethod.GET,"/categorias/*").hasRole("ADMIN");
                     customizeRequest.requestMatchers(HttpMethod.POST,"/categorias/*").hasRole("ADMIN");
                     customizeRequest.requestMatchers(HttpMethod.PUT,"/categorias/*").hasRole("ADMIN");
                     customizeRequest.requestMatchers(HttpMethod.DELETE,"/categorias/*").hasRole("ADMIN");
 
+                    customizeRequest.requestMatchers(HttpMethod.POST,"/usuarios/inhabilitar").hasRole("ADMIN");
                     customizeRequest.requestMatchers(HttpMethod.POST,"/usuarios/nuevousuario").permitAll();
+
+                    customizeRequest.requestMatchers(HttpMethod.DELETE,"/admin/**").hasRole("ADMIN");
+                    customizeRequest.requestMatchers(HttpMethod.POST,"/admin/**").hasRole("ADMIN");
+                    customizeRequest.requestMatchers(HttpMethod.PUT,"/admin/**").hasRole("ADMIN");
+                    customizeRequest.requestMatchers(HttpMethod.GET,"/admin/**").hasRole("ADMIN");
+
+                    customizeRequest.requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll();
 
                     customizeRequest.anyRequest().authenticated();
                 }

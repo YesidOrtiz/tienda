@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -16,6 +17,7 @@ class CrearUsuarioRepositoryTest {
     private  MapperRepositoryToDomainUsuario mapper;
     private CrearUsuarioRepository repository=new CrearUsuarioRepository();
     private UsuarioCrudRepository interfaceRepository;
+    private PasswordEncoder passwordEncoder;
     @BeforeEach
     void setUp(){
         usuarioDomainModel=new Usuario();
@@ -37,12 +39,14 @@ class CrearUsuarioRepositoryTest {
         usuarioPersistenceModel.setSegundoNombre("Joaquin");
         usuarioPersistenceModel.setPrimerApellido("Jimenez");
         usuarioPersistenceModel.setSegundoApellido("");
-        usuarioPersistenceModel.setContrasena("asdf5678");
+        usuarioPersistenceModel.setContrasena("Asdf123+");
         usuarioPersistenceModel.setHabilitado(true);
         mapper= Mockito.mock(MapperRepositoryToDomainUsuario.class);
+        passwordEncoder=Mockito.mock(PasswordEncoder.class);
         interfaceRepository=Mockito.mock(UsuarioCrudRepository.class);
         repository.setMapper(mapper);
         repository.setRepository(interfaceRepository);
+        repository.setPasswordEncoder(passwordEncoder);
     }
 
     @Test
@@ -51,10 +55,12 @@ class CrearUsuarioRepositoryTest {
             Mockito.when(mapper.toDomainModel(usuarioPersistenceModel)).thenReturn(usuarioDomainModel);
             Mockito.when(mapper.toPersistenceModel(usuarioDomainModel)).thenReturn(usuarioPersistenceModel);
             Mockito.when(interfaceRepository.save(usuarioPersistenceModel)).thenReturn(usuarioPersistenceModel);
+            Mockito.when(passwordEncoder.encode(usuarioPersistenceModel.getContrasena())).thenReturn(usuarioPersistenceModel.getContrasena());
             Assertions.assertEquals(usuarioDomainModel, repository.crearUsuario(usuarioDomainModel));
             Mockito.verify(mapper,Mockito.times(1)).toPersistenceModel(usuarioDomainModel);
             Mockito.verify(mapper,Mockito.times(1)).toDomainModel(usuarioPersistenceModel);
             Mockito.verify(interfaceRepository,Mockito.times(1)).save(usuarioPersistenceModel);
+            Mockito.verify(passwordEncoder,Mockito.times(1)).encode(usuarioPersistenceModel.getContrasena());
         } catch (Exception e) {
             Assertions.fail(e);
         }
