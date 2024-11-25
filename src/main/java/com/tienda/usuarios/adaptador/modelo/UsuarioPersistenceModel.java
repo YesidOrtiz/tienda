@@ -1,9 +1,7 @@
 package com.tienda.usuarios.adaptador.modelo;
 
-//import com.tienda.publicaciones.adaptador.modelo.PublicacionPersistenceModel;
 import jakarta.persistence.*;
 
-//import java.util.List;
 
 @Entity
 @Table(name = "tbl_usuarios")
@@ -36,9 +34,6 @@ public class UsuarioPersistenceModel {
 
     @Column(nullable = false)
     private int saldoEnCuenta;
-
-    /*@OneToMany(mappedBy = "usuario")
-    private List<PublicacionPersistenceModel> publicaciones;*/
 
     public UsuarioPersistenceModel() {
     }
@@ -113,5 +108,8 @@ public class UsuarioPersistenceModel {
 
     public void setSaldoEnCuenta(int saldoEnCuenta) {
         this.saldoEnCuenta = saldoEnCuenta;
+    }
+    public String getUserName(){
+        return this.primerNombre+" "+ this.segundoNombre+" "+ this.primerApellido+" "+ this.segundoApellido;
     }
 }

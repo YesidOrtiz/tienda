@@ -75,4 +75,7 @@ public class AdministradorPersistenceModel {
     public void setHabilitado(boolean habilitado) {
         this.habilitado = habilitado;
     }
+    public String getUserName(){
+        return this.nombres+" "+ this.apellidos;
+    }
 }
