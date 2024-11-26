@@ -4,11 +4,11 @@ import com.tienda.exceptionHandler.excepciones.InvalidInputException;
 import com.tienda.exceptionHandler.excepciones.SearchItemNotFoundException;
 import com.tienda.usuarios.adaptador.modelo.CrearUsuario_ControllerModel;
 import com.tienda.usuarios.adaptador.modelo.IdAndBooleanRequest;
-import com.tienda.usuarios.adaptador.modelo.IdRequest;
+//import com.tienda.usuarios.adaptador.modelo.IdRequest;
 import com.tienda.usuarios.adaptador.modelo.UsuarioBasicData;
 import com.tienda.usuarios.aplicacion.puerto.entrada.CasoUsoCrearUsuario;
 import com.tienda.usuarios.aplicacion.puerto.entrada.CasoUsoInhabilitarUsuario;
-import com.tienda.usuarios.dominio.Usuario;
+//import com.tienda.usuarios.dominio.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,13 +23,14 @@ public class UsuarioController {
     private final CasoUsoInhabilitarUsuario inhabilitarUsuarioService;
 
     @Autowired
-    public UsuarioController(CasoUsoCrearUsuario serviceCrearUsuario, MapperControllerToDomainUsuario_CrearUsuario mapper, MapperDomainUsuarioToUsuarioBasicData mapperBasicData, CasoUsoInhabilitarUsuario inhabilitarUsuarioService) {
+    public UsuarioController(CasoUsoCrearUsuario serviceCrearUsuario, MapperControllerToDomainUsuario_CrearUsuario mapper,
+                             MapperDomainUsuarioToUsuarioBasicData mapperBasicData, CasoUsoInhabilitarUsuario inhabilitarUsuarioService) {
         this.serviceCrearUsuario = serviceCrearUsuario;
         this.mapper=mapper;
         this.mapperBasicData=mapperBasicData;
         this.inhabilitarUsuarioService = inhabilitarUsuarioService;
     }
-    @GetMapping("/nuevousuario")
+    @PostMapping("/nuevousuario")
     public ResponseEntity<UsuarioBasicData> crearUsuario(CrearUsuario_ControllerModel user) throws InvalidInputException {
         UsuarioBasicData response=mapperBasicData.toBasicDataModel(serviceCrearUsuario.crearUsuario(mapper.toDomainModel(user)));
         return new ResponseEntity<>(response, HttpStatus.CREATED);

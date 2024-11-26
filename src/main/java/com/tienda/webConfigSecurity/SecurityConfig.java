@@ -41,7 +41,7 @@ public class SecurityConfig {
                     customizeRequest.requestMatchers("/api/auth/**").permitAll();
 
                     customizeRequest.requestMatchers(HttpMethod.DELETE,"/productos/*").hasRole("ADMIN");
-                    customizeRequest.requestMatchers(HttpMethod.GET,"/productos/*").hasAnyRole("ADMIN","USUARIO");
+                    customizeRequest.requestMatchers(HttpMethod.GET,"/productos/*").permitAll();
                     customizeRequest.requestMatchers(HttpMethod.POST,"/productos/*").hasAnyRole("USUARIO");
                     customizeRequest.requestMatchers(HttpMethod.PUT,"/productos/*").hasAnyRole("USUARIO");
 

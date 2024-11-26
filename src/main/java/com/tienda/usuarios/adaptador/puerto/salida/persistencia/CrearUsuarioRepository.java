@@ -13,7 +13,7 @@ public class CrearUsuarioRepository implements PuertoCrearUsuario {
     private UsuarioCrudRepository repository;
     private MapperRepositoryToDomainUsuario mapper;
     private PasswordEncoder passwordEncoder;
-    //private String regexContrasena = "^(?=.*[a-zA-Z])[a-zA-Z0-9#, ]+$";
+
 
     @Autowired
     public void setMapper(MapperRepositoryToDomainUsuario mapper) {
@@ -37,9 +37,7 @@ public class CrearUsuarioRepository implements PuertoCrearUsuario {
         }
         String passwordEncode= this.passwordEncoder.encode(usuario.getContrasena());
         usuario.setContrasena(passwordEncode);
-        /*if (!usuario.getContrasena().matches(regexContrasena)) {
-            throw new InvalidInputException("el campo contraseña no cumple con los requisitos");
-        }*/
+
         UsuarioPersistenceModel response = repository.save(mapper.toPersistenceModel(usuario));
         return mapper.toDomainModel(response);
     }

@@ -26,24 +26,5 @@ public class RestExceptionHandler {
     public ModelResponseForREST handleInvalidInputException(InvalidInputException e){
         return new ModelResponseForREST(e.getMessage());
     }
-    /*
 
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public Map<String, String> handleInvalidArgument(MethodArgumentNotValidException e) {
-        Map<String, String> errorMap = new HashMap<>();
-        e.getBindingResult().getFieldErrors().forEach(error -> {
-            errorMap.put(error.getField(), error.getDefaultMessage());
-        });
-        return errorMap;
-    }
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(ItemAlreadyExistException.class)
-    public Map<String,String> handleItemAlreadyExistException(ItemAlreadyExistException e){
-        Map<String,String> errorMap=new HashMap<>();
-        errorMap.put("errorMessage",e.getMessage());
-        return errorMap;
-    }
-}
-    * */
 }
