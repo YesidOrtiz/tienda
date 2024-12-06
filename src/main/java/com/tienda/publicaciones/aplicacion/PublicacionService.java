@@ -6,6 +6,7 @@ import com.tienda.exceptionHandler.excepciones.SearchItemNotFoundException;
 import com.tienda.publicaciones.aplicacion.puerto.entrada.PublicacionPortIn;
 import com.tienda.publicaciones.aplicacion.puerto.salida.PublicacionPortOut;
 import com.tienda.publicaciones.dominio.Publicacion;
+import com.tienda.usuarios.aplicacion.puerto.entrada.CasoUsoObtenerUsuarioPorDocumento;
 import com.tienda.usuarios.aplicacion.puerto.entrada.CasoUsoValidarUsuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,7 @@ import java.util.ArrayList;
 public class PublicacionService implements PublicacionPortIn {
     private PublicacionPortOut portOut;
     private CasoUsoValidarUsuario validacionUsuario;
+    private CasoUsoObtenerUsuarioPorDocumento obtenerUsuarioPorDocumento;
     private final String regexTituloPublicacion = "^(?=.*[a-zA-Z])[a-zA-Z0-9#, ]+$";
 
     /*------------------------------------------------------------*/
@@ -28,6 +30,11 @@ public class PublicacionService implements PublicacionPortIn {
     @Autowired
     public void setValidacionUsuario(CasoUsoValidarUsuario validacionUsuario) {
         this.validacionUsuario = validacionUsuario;
+    }
+
+    @Autowired
+    public void setObtenerUsuarioPorDocumento(CasoUsoObtenerUsuarioPorDocumento obtenerUsuarioPorDocumento) {
+        this.obtenerUsuarioPorDocumento = obtenerUsuarioPorDocumento;
     }
     /*------------------------------------------------------------*/
 
@@ -56,6 +63,9 @@ public class PublicacionService implements PublicacionPortIn {
         if (!publicacion.getTituloPublicacion().matches(regexTituloPublicacion)){
             throw new InvalidInputException("Titulo de la publicacion con caracteres invalidos");
         }
+        if (publicacion.getUsuario().getId()<=0 && !publicacion.getUsuario().getDocumento().isBlank()){
+            publicacion.setUsuario(obtenerUsuarioPorDocumento.obtenerPorDocumento(publicacion.getUsuario().getDocumento()));
+        }
         if (!validacionUsuario.validarUsuarioExiste(publicacion.getUsuario().getId())){
             throw new InvalidInputException("El usuario que esta tratando de crear la publicacion no existe");
         }
@@ -80,6 +90,9 @@ public class PublicacionService implements PublicacionPortIn {
         }
         if (!publicacion.getTituloPublicacion().matches(regexTituloPublicacion)){
             throw new InvalidInputException("Titulo de la publicacion con caracteres invalidos");
+        }
+        if (publicacion.getUsuario().getId()<=0 && !publicacion.getUsuario().getDocumento().isBlank()){
+            publicacion.setUsuario(obtenerUsuarioPorDocumento.obtenerPorDocumento(publicacion.getUsuario().getDocumento()));
         }
         if (!validacionUsuario.validarUsuarioExiste(publicacion.getUsuario().getId())){
             throw new InvalidInputException("El usuario que esta tratando de crear la publicacion no existe");

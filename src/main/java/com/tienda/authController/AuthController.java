@@ -31,6 +31,7 @@ public class AuthController {
         Authentication authentication=this.authenticationManager.authenticate(login);
 
         String jwt=this.jwtUtil.create(dto.getDocumento());
+        System.out.println(jwt);
         return ResponseEntity.ok().header(HttpHeaders.AUTHORIZATION,jwt).build();
     }
 }

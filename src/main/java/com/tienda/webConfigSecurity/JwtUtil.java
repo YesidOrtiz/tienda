@@ -18,7 +18,7 @@ public class JwtUtil {
                 .withSubject(username)
                 .withIssuer("aplicacion_tienda")//quien firma
                 .withIssuedAt(new Date())//cuando se firmo el token
-                .withExpiresAt(new Date(System.currentTimeMillis()+ TimeUnit.DAYS.toMillis(15)))//fecha en la que se vence
+                .withExpiresAt(new Date(System.currentTimeMillis()+ TimeUnit.MINUTES.toMillis(8)))//fecha en la que se vence
                 .sign(ALGORITHM);//firmado con este algoritmo
     }
     public boolean isValid(String jwt){

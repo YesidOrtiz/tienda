@@ -45,7 +45,7 @@ public class SecurityConfig {
                     customizeRequest.requestMatchers(HttpMethod.POST,"/productos/*").hasAnyRole("USUARIO");
                     customizeRequest.requestMatchers(HttpMethod.PUT,"/productos/*").hasAnyRole("USUARIO");
 
-                    customizeRequest.requestMatchers(HttpMethod.GET,"/categorias/*").hasRole("ADMIN");
+                    customizeRequest.requestMatchers(HttpMethod.GET,"/categorias/*").hasAnyRole("ADMIN","USUARIO");
                     customizeRequest.requestMatchers(HttpMethod.POST,"/categorias/*").hasRole("ADMIN");
                     customizeRequest.requestMatchers(HttpMethod.PUT,"/categorias/*").hasRole("ADMIN");
                     customizeRequest.requestMatchers(HttpMethod.DELETE,"/categorias/*").hasRole("ADMIN");

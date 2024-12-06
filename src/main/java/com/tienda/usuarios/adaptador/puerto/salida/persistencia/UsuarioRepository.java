@@ -32,4 +32,11 @@ public class UsuarioRepository implements PuertoSalidaUsuario {
                 this.repository.findById(id).orElseThrow(()->new SearchItemNotFoundException("No existe el usuario"))
         );
     }
+
+    @Override
+    public Usuario getByDocument(String document) throws SearchItemNotFoundException {
+        return mapper.toDomainModel(
+                this.repository.findByDocumento(document).orElseThrow(()->new SearchItemNotFoundException("El usuario no existe"))
+        );
+    }
 }
