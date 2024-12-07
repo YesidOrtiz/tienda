@@ -15,6 +15,7 @@ public interface MapperRepositoryToDomainAdmin {
             @Mapping(source = "nombres",target = "nombres"),
             @Mapping(source = "apellidos",target = "apellidos"),
             @Mapping(source = "contrasena",target = "contrasena"),
+            @Mapping(source = "totpSecret",target = "totpSecret"),
             @Mapping(source = "habilitado",target = "habilitado")
     })
     Administrador toDomainModel(AdministradorPersistenceModel persistenceModel);

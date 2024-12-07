@@ -4,5 +4,5 @@ import com.tienda.exceptionHandler.excepciones.InvalidInputException;
 import com.tienda.usuarios.dominio.Usuario;
 
 public interface CasoUsoCrearUsuario {
-    Usuario crearUsuario(Usuario usuario) throws InvalidInputException;
+    String crearUsuario(Usuario usuario) throws InvalidInputException;
 }

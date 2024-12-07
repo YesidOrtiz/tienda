@@ -4,6 +4,8 @@ import com.tienda.exceptionHandler.excepciones.InvalidInputException;
 import com.tienda.usuarios.aplicacion.puerto.entrada.CasoUsoCrearUsuario;
 import com.tienda.usuarios.aplicacion.puerto.salida.PuertoCrearUsuario;
 import com.tienda.usuarios.dominio.Usuario;
+import com.tienda.webConfigSecurity.totp.QrCodeUtils;
+import com.tienda.webConfigSecurity.totp.TotpUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +21,7 @@ public class ServicioCrearUsuario implements CasoUsoCrearUsuario {
     }
 
     @Override
-    public Usuario crearUsuario(Usuario usuario) throws InvalidInputException {
+    public String crearUsuario(Usuario usuario) throws InvalidInputException {
         if (usuario.getPrimerNombre().isEmpty() || !usuario.getPrimerNombre().matches(regexNombre)){
             throw new InvalidInputException("Solo se permiten letras en el campo primer nombre");
         }
@@ -52,6 +54,16 @@ public class ServicioCrearUsuario implements CasoUsoCrearUsuario {
         usuario.setHabilitado(true);
         usuario.setSaldoEnCuenta(0);
 
-        return repository.crearUsuario(usuario);
+        //Generar el secreto TOTP
+        String totpSecret = TotpUtils.generateSecret();
+        usuario.setTotpSecret(totpSecret);
+
+        Usuario response=repository.crearUsuario(usuario);
+
+        return QrCodeUtils.generateQrCodeUrl(
+                response.getDocumento(),
+                response.getTotpSecret(),
+                "Tienda"
+        );
     }
 }

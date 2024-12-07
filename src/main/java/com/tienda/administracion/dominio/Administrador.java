@@ -7,6 +7,7 @@ public class Administrador {
     private String nombres;
     private String apellidos;
     private String contrasena;
+    private String totpSecret;
     private boolean habilitado;
 
     public Administrador() {
@@ -58,5 +59,13 @@ public class Administrador {
 
     public void setHabilitado(boolean habilitado) {
         this.habilitado = habilitado;
+    }
+
+    public String getTotpSecret() {
+        return totpSecret;
+    }
+
+    public void setTotpSecret(String totpSecret) {
+        this.totpSecret = totpSecret;
     }
 }

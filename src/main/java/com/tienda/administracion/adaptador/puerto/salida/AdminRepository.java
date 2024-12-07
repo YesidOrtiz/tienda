@@ -87,4 +87,8 @@ public class AdminRepository implements PuertoSalidaAdmin {
         }
         throw new SearchItemNotFoundException("La cuenta de administrador no existe");
     }
+    @Override
+    public Administrador findByDocument(String documento) throws SearchItemNotFoundException {
+        return mapper.toDomainModel(repository.findByDocumento(documento).orElseThrow(()->new SearchItemNotFoundException("No se encuentra el administrador")));
+    }
 }

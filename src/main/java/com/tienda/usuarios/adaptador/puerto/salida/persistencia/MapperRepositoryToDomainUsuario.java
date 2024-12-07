@@ -17,6 +17,7 @@ public interface MapperRepositoryToDomainUsuario {
         @Mapping(source = "primerApellido",target = "primerApellido"),
         @Mapping(source = "segundoApellido",target = "segundoApellido"),
         @Mapping(source = "contrasena",target = "contrasena"),
+        @Mapping(source = "totpSecret",target = "totpSecret"),
         @Mapping(source = "habilitado",target = "habilitado"),
         @Mapping(source = "saldoEnCuenta",target = "saldoEnCuenta"),
     })

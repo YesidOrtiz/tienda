@@ -22,6 +22,9 @@ public class AdministradorPersistenceModel {
     @Column(nullable = false,length = 120)
     private String contrasena;
 
+    @Column(nullable = false,length = 120)
+    private String totpSecret;
+
     @Column(nullable = false)
     private boolean habilitado;
 
@@ -75,6 +78,15 @@ public class AdministradorPersistenceModel {
     public void setHabilitado(boolean habilitado) {
         this.habilitado = habilitado;
     }
+
+    public String getTotpSecret() {
+        return totpSecret;
+    }
+
+    public void setTotpSecret(String totpSecret) {
+        this.totpSecret = totpSecret;
+    }
+
     public String getUserName(){
         return this.nombres+" "+ this.apellidos;
     }

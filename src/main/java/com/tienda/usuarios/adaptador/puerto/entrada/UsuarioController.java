@@ -5,6 +5,7 @@ import com.tienda.exceptionHandler.excepciones.SearchItemNotFoundException;
 import com.tienda.usuarios.adaptador.modelo.CrearUsuario_ControllerModel;
 import com.tienda.usuarios.adaptador.modelo.IdAndBooleanRequest;
 //import com.tienda.usuarios.adaptador.modelo.IdRequest;
+import com.tienda.usuarios.adaptador.modelo.QrCodeUrl;
 import com.tienda.usuarios.adaptador.modelo.UsuarioBasicData;
 import com.tienda.usuarios.aplicacion.puerto.entrada.CasoUsoCrearUsuario;
 import com.tienda.usuarios.aplicacion.puerto.entrada.CasoUsoInhabilitarUsuario;
@@ -31,8 +32,10 @@ public class UsuarioController {
         this.inhabilitarUsuarioService = inhabilitarUsuarioService;
     }
     @PostMapping("/nuevousuario")
-    public ResponseEntity<UsuarioBasicData> crearUsuario(CrearUsuario_ControllerModel user) throws InvalidInputException {
-        UsuarioBasicData response=mapperBasicData.toBasicDataModel(serviceCrearUsuario.crearUsuario(mapper.toDomainModel(user)));
+    public ResponseEntity<QrCodeUrl> crearUsuario(CrearUsuario_ControllerModel user) throws InvalidInputException {
+        String qrCodeUrl=serviceCrearUsuario.crearUsuario(mapper.toDomainModel(user));
+        QrCodeUrl response=new QrCodeUrl();
+        response.setQrCodeUrl(qrCodeUrl);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
     @PostMapping("/inhabilitar")

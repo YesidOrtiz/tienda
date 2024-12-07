@@ -6,6 +6,8 @@ import com.tienda.administracion.dominio.Administrador;
 import com.tienda.exceptionHandler.excepciones.InvalidInputException;
 import com.tienda.exceptionHandler.excepciones.ItemAlreadyExistException;
 import com.tienda.exceptionHandler.excepciones.SearchItemNotFoundException;
+import com.tienda.webConfigSecurity.totp.QrCodeUtils;
+import com.tienda.webConfigSecurity.totp.TotpUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -38,7 +40,12 @@ public class AdminService implements PuertoEntradaAdmin {
     }
 
     @Override
-    public Administrador registrarAdmin(Administrador admin) throws ItemAlreadyExistException, InvalidInputException {
+    public Administrador obtenerAdminPorDocumento(String documento) throws SearchItemNotFoundException {
+        return repository.findByDocument(documento);
+    }
+
+    @Override
+    public String registrarAdmin(Administrador admin) throws ItemAlreadyExistException, InvalidInputException {
         if (admin.getNombres().isEmpty() || !admin.getNombres().matches(regexNombre)){
             throw new InvalidInputException("Solo se permiten letras en el campo nombre");
         }
@@ -59,7 +66,18 @@ public class AdminService implements PuertoEntradaAdmin {
                      Contenga al menos un carácter especial (como @, #, $, %, etc.).""");
         }
         admin.setHabilitado(true);
-        return repository.registrarAdmin(admin);
+
+        //Generar el secreto TOTP
+        String totpSecret= TotpUtils.generateSecret();
+        admin.setTotpSecret(totpSecret);
+
+        Administrador response=repository.registrarAdmin(admin);
+
+        return QrCodeUtils.generateQrCodeUrl(
+                response.getDocumento(),
+                response.getTotpSecret(),
+                "Tienda"
+        );
     }
 
     @Override

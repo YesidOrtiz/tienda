@@ -42,6 +42,13 @@ dependencies {
 // https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-starter-webmvc-ui
 	implementation group: 'org.springdoc', name: 'springdoc-openapi-starter-webmvc-ui', version: '2.2.0'
 
+	// https://mvnrepository.com/artifact/com.warrenstrange/googleauth
+	//implementation 'com.warrenstrange:googleauth:1.5.0'
+
+	// https://mvnrepository.com/artifact/org.jboss.aerogear/aerogear-otp-java
+	implementation 'org.jboss.aerogear:aerogear-otp-java:1.0.0'
+
+
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'

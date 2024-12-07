@@ -29,6 +29,9 @@ public class UsuarioPersistenceModel {
     @Column(nullable = false,length = 120)
     private String contrasena;
 
+    @Column(nullable = false,length = 120)
+    private String totpSecret;
+
     @Column(nullable = false)
     private boolean habilitado;
 
@@ -109,6 +112,15 @@ public class UsuarioPersistenceModel {
     public void setSaldoEnCuenta(int saldoEnCuenta) {
         this.saldoEnCuenta = saldoEnCuenta;
     }
+
+    public String getTotpSecret() {
+        return totpSecret;
+    }
+
+    public void setTotpSecret(String totpSecret) {
+        this.totpSecret = totpSecret;
+    }
+
     public String getUserName(){
         return this.primerNombre+" "+ this.segundoNombre+" "+ this.primerApellido+" "+ this.segundoApellido;
     }

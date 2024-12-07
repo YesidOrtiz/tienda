@@ -11,7 +11,8 @@ public interface PuertoEntradaAdmin {
     boolean existePorId(int id);
     ArrayList<Administrador> obtenerAdmins();
     Administrador obtenerAdminPorId(int id) throws SearchItemNotFoundException;
-    Administrador registrarAdmin(Administrador admin) throws ItemAlreadyExistException, InvalidInputException;
+    Administrador obtenerAdminPorDocumento(String documento) throws SearchItemNotFoundException;
+    String registrarAdmin(Administrador admin) throws ItemAlreadyExistException, InvalidInputException;
     Administrador actualizarAdmin(Administrador admin) throws SearchItemNotFoundException, InvalidInputException;
     boolean eliminarAdminPorId(int id) throws SearchItemNotFoundException;
 }

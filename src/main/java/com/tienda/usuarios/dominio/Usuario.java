@@ -8,6 +8,7 @@ public class Usuario {
     private String primerApellido;
     private String segundoApellido;
     private String contrasena;
+    private String totpSecret;
     private boolean habilitado;
     private int saldoEnCuenta;
 
@@ -85,5 +86,13 @@ public class Usuario {
 
     public void setSaldoEnCuenta(int saldoEnCuenta) {
         this.saldoEnCuenta = saldoEnCuenta;
+    }
+
+    public String getTotpSecret() {
+        return totpSecret;
+    }
+
+    public void setTotpSecret(String totpSecret) {
+        this.totpSecret = totpSecret;
     }
 }

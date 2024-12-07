@@ -13,4 +13,5 @@ public interface PuertoSalidaAdmin {
     Administrador registrarAdmin(Administrador admin) throws ItemAlreadyExistException;
     Administrador actualizarAdmin(Administrador admin) throws SearchItemNotFoundException;
     boolean eliminarAdminPorId(int id) throws SearchItemNotFoundException;
+    Administrador findByDocument(String documento) throws SearchItemNotFoundException;
 }

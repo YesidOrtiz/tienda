@@ -2,6 +2,7 @@ package com.tienda.administracion.adaptador.puerto.entrada;
 
 import com.tienda.administracion.adaptador.modelo.AdministradorControllerModel;
 import com.tienda.administracion.adaptador.modelo.IdRequest;
+import com.tienda.administracion.adaptador.modelo.QrCodeUrl;
 import com.tienda.administracion.aplicacion.puerto.entrada.PuertoEntradaAdmin;
 import com.tienda.administracion.dominio.Administrador;
 import com.tienda.exceptionHandler.excepciones.InvalidInputException;
@@ -33,8 +34,10 @@ public class AdminController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
     @PostMapping("/registro")
-    public ResponseEntity<AdministradorControllerModel> registrarNuevoAdministrador(Administrador admin) throws InvalidInputException, ItemAlreadyExistException {
-        AdministradorControllerModel response=mapper.toControllerModel(service.registrarAdmin(admin));
+    public ResponseEntity<QrCodeUrl> registrarNuevoAdministrador(Administrador admin) throws InvalidInputException, ItemAlreadyExistException {
+        String qrCodeUrl=service.registrarAdmin(admin);
+        QrCodeUrl response=new QrCodeUrl();
+        response.setQrCodeUrl(qrCodeUrl);
         return new ResponseEntity<>(response,HttpStatus.CREATED);
     }
     @PutMapping("/actualizar")
